@@ -34,18 +34,24 @@ export const getUsersForSidebar = async (req, res) => {
     }
 };
 
-
 export const getUsersForSearch = async (req, res) => {
-  try {
-    const { name: userName } = req.params;
-    const userId = req.user._id
-    
-    const users = await User.find({ userName: { $regex: userName, $options: 'i' }, _id: {$ne: userId} });
-
-    res.status(200).json(users);
-  } catch (error) {
-    console.log("Error in getUsersForSearch controller:", error.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
+    try {
+      const { name: userName } = req.params;
+      const userId = req.user._id;
+  
+      const users = await User.find({
+        $or: [
+          { username: { $regex: userName, $options: 'i' } },
+          { fullName: { $regex: userName, $options: 'i' } }
+        ],
+        _id: { $ne: userId }
+      });
+  
+      res.status(200).json(users);
+    } catch (error) {
+      console.log("Error in getUsersForSearch controller:", error.message);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+  
 

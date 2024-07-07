@@ -13,6 +13,7 @@ const Message = ({ message }) => {
   const {selectedConversation} = useConversation()
   let fromMe = new ObjectId(senderId).equals(new ObjectId(authUser._id))
   const formattedTime = new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const shakeClass = message.shouldShake? "shake":""
 
   return (
     <div className={`chat ${fromMe?"chat-end":"chat-start"}`}>
@@ -25,7 +26,7 @@ const Message = ({ message }) => {
         <span>{fromMe? authUser.fullName:selectedConversation.fullName}</span>&nbsp;
         <time className="text-xs opacity-50">{formattedTime}</time>
       </div>
-      <div className={`chat-bubble text-white ${fromMe?"bg-blue-500":""}`}>{msg}</div>
+      <div className={`chat-bubble text-white ${fromMe?"bg-blue-500":""} ${shakeClass}`}>{msg}</div>
     </div>
   );
 };

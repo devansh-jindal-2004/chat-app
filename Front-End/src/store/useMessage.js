@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const useMessage = create((set)=> ({
-    messages: [],
+  messages: [],
   setMessages: (messages) => set({ messages }),
 }))
 
