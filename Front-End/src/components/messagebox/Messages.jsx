@@ -10,9 +10,12 @@ function Messages() {
   const lastMsgRef = useRef();
 
   useEffect(() => {
-    lastMsgRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (lastMsgRef.current) {
+      console.log("Scrolling to last message");
+      lastMsgRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
-  
+
   return (
     <div className='px-4 flex-1 overflow-auto'>
       {!loading && messages.length > 0 && messages.map((message, index) => (

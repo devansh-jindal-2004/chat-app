@@ -44,7 +44,7 @@ export const getUsersForSearch = async (req, res) => {
           { userName: { $regex: name, $options: 'i' } },
           { fullName: { $regex: name, $options: 'i' } }
         ],
-        _id: { $ne:  mongoose.Types.ObjectId(userId) }
+        _id: { $ne: new mongoose.Types.ObjectId(userId) }
       });
   
       res.status(200).json(users);
