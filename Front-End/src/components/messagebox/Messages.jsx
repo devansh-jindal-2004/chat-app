@@ -10,7 +10,6 @@ function Messages() {
   const lastMsgRef = useRef();
 
   useEffect(() => {
-    console.log("useEffect triggered"); // Add this log to see if useEffect is running
     if (lastMsgRef.current) {
       console.log("Scrolling to last message");
       lastMsgRef.current.scrollIntoView({ behavior: "smooth" });
@@ -18,11 +17,20 @@ function Messages() {
       console.log("lastMsgRef.current is null");
     }
   }, [messages]);
+
+  useEffect(() => {
+    // Set the ref to the last message element when messages change
+    if (messages.length > 0) {
+      lastMsgRef.current = messages[messages.length - 1];
+    }
+  }, [messages]);
+
   return (
     <div className='px-4 flex-1 overflow-auto'>
       {!loading && messages.length > 0 && messages.map((message, index) => (
-        <div key={message._id} ref={index === messages.length - 1 ? lastMsgRef : null}>
-          <Message message={message} />
+        <div key={message._id}>
+          {/* Only assign ref to the last message */}
+          <Message message={message} ref={index === messages.length - 1 ? lastMsgRef : null} />
         </div>
       ))}
       {loading && (
