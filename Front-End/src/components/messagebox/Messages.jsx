@@ -7,7 +7,7 @@ import useListenMessages from '../../hooks/useListenMessages.js';
 function Messages() {
   const { loading, messages } = useGetMessage();
   useListenMessages();
-  const lastMsgRef = useRef();
+  const lastMsgRef = useRef(null); // Initialize with null
 
   useEffect(() => {
     if (lastMsgRef.current) {
@@ -18,19 +18,11 @@ function Messages() {
     }
   }, [messages]);
 
-  useEffect(() => {
-    // Set the ref to the last message element when messages change
-    if (messages.length > 0) {
-      lastMsgRef.current = messages[messages.length - 1];
-    }
-  }, [messages]);
-
   return (
     <div className='px-4 flex-1 overflow-auto'>
       {!loading && messages.length > 0 && messages.map((message, index) => (
-        <div key={message._id}>
-          {/* Only assign ref to the last message */}
-          <Message message={message} ref={index === messages.length - 1 ? lastMsgRef : null} />
+        <div key={message._id} ref={index === messages.length - 1 ? lastMsgRef : null}>
+          <Message message={message} />
         </div>
       ))}
       {loading && (
