@@ -36,15 +36,15 @@ export const getUsersForSidebar = async (req, res) => {
 
 export const getUsersForSearch = async (req, res) => {
     try {
-      const { name: userName } = req.params;
+      const { name } = req.params;
       const userId = req.user._id;
   
       const users = await User.find({
         $or: [
-          { username: { $regex: userName, $options: 'i' } },
-          { fullName: { $regex: userName, $options: 'i' } }
+          { userName: { $regex: name, $options: 'i' } },
+          { fullName: { $regex: name, $options: 'i' } }
         ],
-        _id: { $ne: userId }
+        _id: { $ne:  mongoose.Types.ObjectId(userId) }
       });
   
       res.status(200).json(users);
