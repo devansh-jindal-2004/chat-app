@@ -10,12 +10,14 @@ function Messages() {
   const lastMsgRef = useRef();
 
   useEffect(() => {
+    console.log("useEffect triggered"); // Add this log to see if useEffect is running
     if (lastMsgRef.current) {
       console.log("Scrolling to last message");
       lastMsgRef.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.log("lastMsgRef.current is null");
     }
   }, [messages]);
-
   return (
     <div className='px-4 flex-1 overflow-auto'>
       {!loading && messages.length > 0 && messages.map((message, index) => (
