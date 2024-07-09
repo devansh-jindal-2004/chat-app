@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import Message from './Message';
 import useGetMessage from '../../hooks/useGetMessage.js';
 import MessageSkelton from '../skelton/MessageSkelton.jsx';
@@ -9,14 +9,19 @@ function Messages() {
   useListenMessages();
   const lastMsgRef = useRef(null); // Initialize with null
 
-  useEffect(() => {
+  const scrollToBottom = useCallback(() => {
     if (lastMsgRef.current) {
-      console.log("Scrolling to last message");
       lastMsgRef.current.scrollIntoView({ behavior: "smooth" });
-    } else {
-      console.log("lastMsgRef.current is null");
     }
-  }, [messages]);
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom(); // Scroll to bottom on initial load
+  }, [scrollToBottom]);
+
+  useEffect(() => {
+    scrollToBottom(); // Scroll to bottom whenever messages change
+  }, [scrollToBottom, messages]);
 
   return (
     <div className='px-4 flex-1 overflow-auto'>
@@ -37,6 +42,7 @@ function Messages() {
       {!loading && messages.length === 0 && (
         <p className='text-center text-gray-200'>Send a message to this conversation</p>
       )}
+      <div ref={lastMsgRef}></div> {/* Empty div to set ref for scrolling */}
     </div>
   );
 }
