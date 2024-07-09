@@ -11,15 +11,14 @@ function useGetUsers() {
     let res;
     try {
       if (name) {
-        res = await fetch(`http://localhost:8000/api/users/search/${name}`, {
+        res = await fetch(`/api/users/search/${name}`, {
           method: 'GET',
-          credentials: 'include', // Include cookies in request
           headers: {
             'Content-Type': 'application/json',
           },
         });
       } else {
-        res = await fetch('http://localhost:8000/api/users', {
+        res = await fetch('/api/users', {
           method: 'GET',
           credentials: 'include', // Include cookies in request
           headers: {

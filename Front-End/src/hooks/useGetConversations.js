@@ -10,9 +10,8 @@ const useGetConversations = () => {
     const getConversations = async () => {
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:8000/api/users', {
+        const res = await fetch('/api/users', {
           method: 'GET',
-          credentials: 'include', // Include cookies in request
           headers: {
             'Content-Type': 'application/json',
           },
