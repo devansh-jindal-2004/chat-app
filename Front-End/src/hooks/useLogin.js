@@ -1,12 +1,15 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import useConversation from "../store/useConversation";
 
 function useLogin(){
+    const {setSelectedConversation} = useConversation();
     const [loading, setLoading] = useState(false)
     const {setAuthUser} = useAuthContext()
 
     const login = async({userName, password})=>{
+        
         const sucess = handelInputError({userName, password})
         if(!sucess) return
 
@@ -25,6 +28,7 @@ function useLogin(){
             }
             if (res.ok) {
                 toast.success("Login successful!");
+                setSelectedConversation(null)
             } else {
                 toast.error(data.message || "Login failed!");
             }

@@ -1,8 +1,12 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import useConversation from "../store/useConversation";
+
 
 function useSignup() {
+
+    const {setSelectedConversation}= useConversation();
     const [loading, setLoading] = useState(false);
     const { setAuthUser} = useAuthContext()
 
@@ -25,6 +29,7 @@ function useSignup() {
             }
             if (res.ok) {
                 toast.success("Signup successful!");
+                setSelectedConversation(null)
             } else {
                 toast.error(data.message || "Signup failed!");
             }

@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 body{
-    background: linear-gradient(rgba(0,0,0,0.2), rgba(0, 0, 0, 0.2)), url("./assets/bg.jpg");
+   background-color: #153448;
+}
+
+/* .background-image{
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0, 0, 0, 0.2)), url("./assets/OIP.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-}
+} */
+
 
 ::-webkit-scrollbar{
     width: 8px;
@@ -55,4 +60,7 @@ body{
     60% {
         transform: translate3d(4px, 0, 0);
     }
+}
+.custom-border{
+    border:  2px solid rgba(0, 0, 0, 0.295);
 }

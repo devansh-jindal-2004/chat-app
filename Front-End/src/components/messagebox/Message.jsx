@@ -22,11 +22,11 @@ const Message = ({ message }) => {
           <img src={fromMe?authUser.profilePic:selectedConversation.profilePic} alt="Avatar" />
         </div>
       </div>
-      <div className='chat-header text-gray-200'>
+      <div className='chat-header text-[#153448]'>
         <span>{fromMe? authUser.fullName:selectedConversation.fullName}</span>&nbsp;
-        <time className="text-xs opacity-50">{formattedTime}</time>
+        <time className="text-xs opacity-100">{formattedTime}</time>
       </div>
-      <div className={`chat-bubble text-white ${fromMe?"bg-blue-500":""} ${shakeClass}`}>{msg}</div>
+      <div className={`chat-bubble text-white ${fromMe?"bg-[#399cdd]":""} ${shakeClass}`}>{msg}</div>
     </div>
   );
 };

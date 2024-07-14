@@ -2,28 +2,29 @@ import React from 'react'
 import Sidebar from '../../components/sidebar/Sidebar'
 import MessageContainer from '../../components/messagebox/MessageContainer'
 import NoChatSelected from '../../components/messagebox/NoChatSelected'
+import useConversation from '../../store/useConversation'
 
 export default function Home() {
-  return (
-        <div className='flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-            <Sidebar />
-            <MessageContainer />
-        </div>
+
+    const { selectedConversation } = useConversation();
+    console.log("selectedconversation-->", selectedConversation);
+
+    return (
+        <>
+
+            <div className=' hidden md:flex h-screen  w-full rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
+                <Sidebar />
+                <MessageContainer />
+            </div>
+
+            <div className=' md:hidden h-screen  w-full rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
+
+                {!selectedConversation ? (<Sidebar />) : (<MessageContainer />)}
+
+            </div>
+
+
+        </>
     )
 }
 
-
-// starter code
-
-// import React from 'react'
-// import Sidebar from '../../components/sidebar/Sidebar'
-// import MessageContainer from '../../components/messagebox/MessageContainer'
-
-// export default function Home() {
-//   return (
-//         <div className='flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-//             <Sidebar />
-//             <MessageContainer />
-//         </div>
-//     )
-// }

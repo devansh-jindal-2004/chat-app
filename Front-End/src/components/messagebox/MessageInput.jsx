@@ -14,11 +14,11 @@ function MessageInput() {
   };
 
   return (
-    <form className="px-4 my-3" onSubmit={handleSubmit}>
-      <div className="flex w-full relative bg-white rounded-2xl">
+    <form className="md:px-8 px-4 my-3" onSubmit={handleSubmit}>
+      <div className="flex w-full relative bg-white rounded-2xl  px-3">
         <input
           type="text"
-          className="border text-sm rounded-2xl block w-full p-2.5 bg-white/20 outline-none text-black"
+          className="  text-sm rounded-2xl block w-full p-2.5  bg-white/20 outline-none text-black"
           placeholder="Send a message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}

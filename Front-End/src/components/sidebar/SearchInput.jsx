@@ -12,21 +12,21 @@ function SearchInput() {
   };
 
   return (
-    <div>
-      <form className="flex items-center gap-2" onSubmit={handleSubmit}>
+    <div className=' '>
+      <form className="flex w-full  " onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Search..."
-          className="input input-bordered rounded-full"
+          className=" w-full md:w-[80%] py-3 px-5 rounded-l-md outline-none "
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
           type="submit"
-          className="btn btn-circle bg-sky-500 text-white"
+          className="text-center md:text-2xl md:w-[20%]  rounded-e-md text-white bg-[#3b8ec5] hover:bg-[#2b6388]"
           disabled={loading}
         >
-          <IoSearchSharp className="w-6 h-6 outline-none" />
+          <IoSearchSharp className="w-7 h-7 ml-2 outline-none" />
         </button>
       </form>
     </div>

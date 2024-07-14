@@ -1,86 +1,56 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import useLogin from '../../hooks/useLogin';
+import Input from '../../components/Input';
+import { useForm } from 'react-hook-form';
+import "../../index.css"
 
 export default function Login() {
-    let [inputs, setInputs] = useState({
-        userName: "",
-        password: ""
-    })
+    const { register, handleSubmit } = useForm();
+    const { loading, login } = useLogin();
 
-    const {loading, login} = useLogin()
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await login(inputs);
+    const handleForm = async (data) => {
+        console.log(data);
+        await login(data);
     };
-  return (
-        <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-            <div className=' w-full p-6 rounded-lg  shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-                <h1 className=' text-3xl font-semibold text-center text-gray-200'>
-                    Login&nbsp;
-                    <span className=' text-blue-500'>ChatApp</span>
-                </h1>    
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label className=' label p-2' >
-                            <span className=' text-gray-300 label-text'>Username</span>
-                        </label>
-                        <input type="text" value={inputs.userName} placeholder='Enter Username' className=' w-full input input-bordered h-10' onChange={(e)=> setInputs({...inputs, userName:e.target.value})} />
-                    </div>
-                    <div>
-                        <label className=' label p-2' >
-                            <span className=' text-gray-300 label-text'>Password</span>
-                        </label>
-                        <input type="password" value={inputs.password} placeholder='Enter Password' className=' w-full input input-bordered h-10' onChange={(e)=> setInputs({...inputs, password:e.target.value})} />
-                    </div>
-                    <Link to="/signup" className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block text-gray-400'>
-                        {"Don't"} have an account ?
+
+    return (
+        <div className="flex flex-col w-full items-center justify-center min-h-screen p-4  bg-gray-200">
+            <div className="w-full max-w-md p-10 rounded-lg bg-gray-200 shadow-neumorphism">
+                <h1 className=" text-2xl md:text-4xl font-bold text-center text-gray-800 mb-6">
+                    Login <span className=" text-green-400">ChatApp</span>
+                </h1>
+                <form onSubmit={handleSubmit(handleForm)}>
+                    <Input
+                        className="mb-6"
+                        label="Username"
+                        placeholder="Enter Username"
+                        type="text"
+                        icon="fa-regular fa-circle-user"
+                        iconColor=" text-blue-400"
+                        {...register("userName", { require: true })}
+                    />
+                    <Input
+                        className="mb-5"
+                        label="Password"
+                        placeholder="Enter Password"
+                        type="password"
+                         icon ="fa-solid fa-unlock-keyhole"
+                        iconColor=" text-green-400"
+                        {...register("password", { require: true })}
+                    />
+                    <Link to="/signup" className="text-md  hover:underline hover:text-blue-600 block text-blue-500 mb-4">
+                        {"Don't"} have an account?
                     </Link>
-                    <div>
-                    <button type='submit' className={`btn btn-block btn-sm mt-2 border border-slate-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}  disabled={loading} >
+                    <button
+                        type="submit"
+                        className={`w-full py-3 px-4 rounded-lg text-white text-xl  bg-green-400 shadow-neumorphism-button hover:bg-green-500 focus:ring-4 focus:ring-blue-300 transition-all duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={loading}
+                    >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
-                    </div>
                 </form>
-            </div>    
+            </div>
         </div>
-    )
+    );
 }
-
-// starter code
-
-// import React from 'react'
-
-// export default function Login() {
-//   return (
-//         <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-//             <div className=' w-full p-6 rounded-lg  shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-//                 <h1 className=' text-3xl font-semibold text-center text-gray-200'>
-//                     Login&nbsp;
-//                     <span className=' text-blue-500'>ChatApp</span>
-//                 </h1>    
-//                 <form>
-//                     <div>
-//                         <label className=' label p-2' >
-//                             <span className=' text-gray-300 label-text'>Username</span>
-//                         </label>
-//                         <input type="text" placeholder='Enter Username' className=' w-full input input-bordered h-10' />
-//                     </div>
-//                     <div>
-//                         <label className=' label p-2' >
-//                             <span className=' text-gray-300 label-text'>Password</span>
-//                         </label>
-//                         <input type="password" placeholder='Enter Password' className=' w-full input input-bordered h-10' />
-//                     </div>
-//                     <a href="#" className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block text-gray-400'>
-//                         {"Don't"} have an account ?
-//                     </a>
-//                     <div>
-//                         <button className='btn btn-block btn-sm mt-2'>Login</button>
-//                     </div>
-//                 </form>
-//             </div>    
-//         </div>
-//     )
-// }
