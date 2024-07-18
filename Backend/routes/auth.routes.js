@@ -11,4 +11,5 @@ router.post("/login", login)
 router.post("/logout", logout)
 
 router.post("/update", protectRoute, update)
+
 export default router
