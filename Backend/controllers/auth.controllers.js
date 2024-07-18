@@ -84,3 +84,32 @@ export const logout = (req, res) => {
         res.status(500).json({error:"internal server error"})   
    }
 }
+
+export const update = async (req, res) => {
+    const { userName, fullName, profilePic } = req.body;
+    const userId = req.user._id;
+
+    if (!userId) return res.status(404).send({ message: 'User not logged in' });
+
+    const updateData = {};
+    if (userName) updateData.userName = userName;
+    if (fullName) updateData.fullName = fullName;
+    if (profilePic) updateData.profilePic = profilePic;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: updateData },
+            { new: true, select: '-password' }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        res.status(200).send(updatedUser);
+    } catch (error) {
+        res.status(500).send({ message: 'Error updating user', error });
+    }
+};
+
