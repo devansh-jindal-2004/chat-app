@@ -40,7 +40,9 @@ function Input({ className = "", label, placeholder = "", type = "text", icon, i
                     id={uniqueId}
                     type={type}
                     placeholder={placeholder}
+                    onChange={onChange}
                     {...props}
+                    
                     ref={ref}
                 />
             </div>

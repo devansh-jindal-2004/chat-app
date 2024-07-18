@@ -21,7 +21,8 @@ function Messages() {
       </div>
       ))}
       {loading && (<><MessageSkelton /> <MessageSkelton /><MessageSkelton /> <MessageSkelton /><MessageSkelton /></>)}
-      {!loading && messages.length == 0 && (<p className='text-center text-[#153448] pt-6'>Send a message to this conversation</p>)}
+      {!loading && messages.length == 0 && (
+        <p className='mt-[15%] text-center text-[#153448] pt-6'><p className=' text-2xl text-[#153448]'>Welcome 👋</p>Send a message to this conversation</p>)}
     </div>
   );
 }

@@ -9,6 +9,7 @@ function SearchInput() {
   const handleSubmit = (e) => {
     e.preventDefault();
     getUsers(search); 
+    setSearch("")
   };
 
   return (
@@ -26,7 +27,7 @@ function SearchInput() {
           className="text-center md:text-2xl md:w-[20%]  rounded-e-md text-white bg-[#3b8ec5] hover:bg-[#2b6388]"
           disabled={loading}
         >
-          <IoSearchSharp className="w-7 h-7 ml-2 outline-none" />
+          <IoSearchSharp className="w-7 h-7  mx-3  outline-none" />
         </button>
       </form>
     </div>

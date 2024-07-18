@@ -1,28 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Messages from './Messages';
 import MessageInput from './MessageInput';
 import NoChatSelected from './NoChatSelected';
 import useConversation from '../../store/useConversation';
+import Setting from '../Setting/Setting';
+// import { useAuthContext } from '../../context/AuthContext';
 
 function MessageContainer() {
+  // const {authUser} = useAuthContext();
   const { selectedConversation, setSelectedConversation } = useConversation();
-  // useEffect(() => {
-  //   return () => setSelectedConversation(null);
-  // }, []);
-
+  const [open, setOpen] = useState(false);
   const handleOnclick = () => {
     setSelectedConversation(null)
   }
 
+  const handleMenuBtn = () => {
+    setOpen((prev) => !prev)
+  }
+
   return (
-    <div className='w-full h-screen md:w-2/3 flex flex-col bg-[#DFD0B8] overflow-hidden '>
+    <div className='w-full h-screen md:w-2/3 flex flex-col bg-[#DFD0B8] overflow-hidden relative  '>
+      {open ? <Setting /> : null}
       {!selectedConversation ? <NoChatSelected /> : (
         <>
 
-          <div className='bg-[#3C5B6F] px-4 py-2 mb-2  sticky top-0'>
-            <button onClick={handleOnclick} className=' md:hidden text-2xl text-[#DFD0B8]'><i className="fa-solid fa-arrow-left-long"></i></button>
-            <span className='label-text text-2xl text-[#DFD0B8] ms-10'>To: </span>
-            <span className='text-[#DFD0B8] text-2xl font-bold'>{selectedConversation.fullName}</span>
+          <div className='bg-[#3C5B6F] flex  px-4 py-2 mb-2  sticky top-0'>
+            <div >
+              <button onClick={handleOnclick} className=' md:hidden text-2xl text-[#DFD0B8]'><i className="fa-solid fa-arrow-left-long"></i></button>
+            </div>
+            <div className=' ms-10 flex'>
+              <div className='w-12 rounded-full'>
+                <img src={selectedConversation.profilePic} alt="useravatar" />
+              </div>
+
+              <span className='text-[#DFD0B8]  ps-4 pt-2 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>
+            </div>
+            <div>
+              <button onClick={handleMenuBtn} className=' text-[#DFD0B8]  absolute right-4 text-xl md:top-3 top-4 md:right-6 md:text-3xl'><i className="fa-solid fa-gear"></i>
+              </button>
+            </div>
           </div>
           <Messages />
           <MessageInput />

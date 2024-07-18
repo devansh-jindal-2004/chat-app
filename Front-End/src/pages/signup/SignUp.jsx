@@ -15,7 +15,6 @@ export default function SignUp() {
     };
 
     const handleSubmit2 = async (data) => {
-        console.log("data-->", data);
         await signup(data);
     };
 
