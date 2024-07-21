@@ -2,32 +2,32 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
     fullName: {
-        type:String,
+        type: String,
         required: true
     },
-    userName:{
-        type:String,
-        required:true,
-        unique:true
+    userName: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password:{
-        type:String,
-        required:true,
-        minlength:6
+    password: {
+        type: String,
+        required: true,
+        minlength: 6
     },
-    gender:{
-        type:String,
-        required:true,
-        enum:["male", "female"]
+    gender: {
+        type: String,
+        required: true,
+        enum: ["male", "female"]
     },
-    profilePic:{
-        type:String
+    profilePic: {
+        url: String,
+        public_id: String
     },
-    userTheme : {
-        type : String,
-        
+    userTheme: {
+        type: String
     }
-},{timestamps:true});
+}, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 

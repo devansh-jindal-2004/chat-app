@@ -1,92 +1,90 @@
-import User from "../Models/user.model.js"
-import bcrypt from "bcryptjs"
+import User from "../Models/user.model.js";
+import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../utils/generateToken.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const signup = async (req, res) => {
     try {
-        const {fullName, userName, password, confirmPassword, gender} = req.body;
-        if(password  !== confirmPassword){
-            return res.status(400).json({error: "passwords dont match"})
+        const { fullName, userName, password, confirmPassword, gender } = req.body;
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: "Passwords don't match" });
         }
 
-        const user = await User.findOne({userName})
-        if(user){
-            return res.status(400).json({error:"Username already exists"})
+        const user = await User.findOne({ userName });
+        if (user) {
+            return res.status(400).json({ error: "Username already exists" });
         }
 
-        // hashing pass here
+        // Hashing password
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-
-        const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${userName}`
-        const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${userName}`
+        const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
+        const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${userName}`;
+        const profilePicUrl = gender === "male" ? boyProfilePic : girlProfilePic;
 
         const newUser = new User({
             userName,
             fullName,
-            password: hashedPassword                                     ,
+            password: hashedPassword,
             gender,
-            profilePic: gender=="male"?boyProfilePic:girlProfilePic
+            profilePic: { url: profilePicUrl }
+        });
 
-        })
-
-        if(newUser){
-            await newUser.save();
-            generateTokenAndSetCookie(newUser._id, res)
+        await newUser.save();
+        generateTokenAndSetCookie(newUser._id, res);
 
         res.status(201).json({
             _id: newUser._id,
             fullName: newUser.fullName,
             userName: newUser.userName,
             profilePic: newUser.profilePic
-        })
-        } else{
-            res.status(400).json({error: "invalid user data"})
-        }
-
+        });
     } catch (error) {
-        console.log("error in signup controller",  error.message)
-        res.status(500).json({error:"internal server error"})
+        console.log("Error in signup controller", error.message);
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 export const login = async (req, res) => {
     try {
         const { userName, password } = req.body;
         const user = await User.findOne({ userName });
 
-        const isPasswordCorrect = await bcrypt.compare(password, user ? user.password : "");
-        if (!user || !isPasswordCorrect) {
+        if (!user) {
+            return res.status(401).json({ error: "Incorrect username or password" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
             return res.status(401).json({ error: "Incorrect username or password" });
         }
 
         generateTokenAndSetCookie(user._id, res);
-        return res.status(201).json({
+        res.status(201).json({
             _id: user._id,
             fullName: user.fullName,
             userName: user.userName,
             profilePic: user.profilePic
         });
-
     } catch (error) {
         console.log("Error in login controller:", error.message);
-        return res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 export const logout = (req, res) => {
-   try {
-    res.cookie("jwt", "", {maxAge: 0})
-    res.status(200).json({message: "logged out sucessfully"})
-   } catch (error) {
-        console.log("error in logOut controller",  error.message)
-        res.status(500).json({error:"internal server error"})   
-   }
-}
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        console.log("Error in logout controller", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
 
 export const update = async (req, res) => {
-    const { userName, fullName, profilePic } = req.body;
+    const { userName, fullName } = req.body;
     const userId = req.user._id;
 
     if (!userId) return res.status(404).send({ message: 'User not logged in' });
@@ -94,7 +92,6 @@ export const update = async (req, res) => {
     const updateData = {};
     if (userName) updateData.userName = userName;
     if (fullName) updateData.fullName = fullName;
-    if (profilePic) updateData.profilePic = profilePic;
 
     try {
         const updatedUser = await User.findByIdAndUpdate(
@@ -113,3 +110,29 @@ export const update = async (req, res) => {
     }
 };
 
+export const updatePic = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (user.profilePic.public_id) {
+            await cloudinary.uploader.destroy(user.profilePic.public_id);
+        }
+
+        user.profilePic = {
+            url: req.file.path,
+            public_id: req.file.filename
+        };
+
+        await user.save();
+
+        res.status(200).json({ message: "Profile picture updated successfully", profilePic: user.profilePic });
+    } catch (error) {
+        console.error("Error updating profile picture:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
