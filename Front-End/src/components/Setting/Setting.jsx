@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import ProfileImgSetting from '../ProfileImgSetting/ProfileImgSetting';
 import Input from '../Input';
+import {Link} from "react-router-dom"
+import useEditAuth from '../../hooks/useEditAuth';
 
 function Setting() {
   const { authUser } = useAuthContext();
-  const [notEditable, setNotEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [userName, setUserName] = useState(authUser.userName);
   const [fullName, setFullName] = useState(authUser.fullName);
+  const {editAuth, loading} =  useEditAuth();
 
-  const handleEditToggle = () => {
-    setNotEditable((prev) => !prev);
+  const handleEditToggle = async () => {
+    if(editable){
+      setEditable(false);
+       await editAuth({userName,fullName})
+    } else {
+      setEditable(true)
+    }
+    
   };
 
   return (
@@ -18,17 +27,17 @@ function Setting() {
       <ProfileImgSetting />
      
        <button
-        className="rounded-xl px-4 py-2 bg-[#153448] text-white right-0"
+        className="rounded-xl px-4 py-2 border  text-[#153448]  relative left-60"
         onClick={handleEditToggle}
       >
-        {notEditable ? 'Edit' : 'Save'}
+        {editable ?'✔ Save': (<i className="fa-solid fa-pen"></i>) }
       </button>
       <Input 
       label = "Username" 
       type = "text"  
       className="outline-none border" 
       value = {userName}
-      readOnly={notEditable}
+      readOnly={!editable}
       onChange={(e) => setUserName(e.target.value)} 
       />
       
@@ -38,9 +47,11 @@ function Setting() {
       type = "text"  
       className="outline-none border" 
       value = {fullName}
-      readOnly={notEditable}
+      readOnly={!editable}
       onChange={(e) => setFullName(e.target.value)} 
       />
+
+      <Link to = "/theme" className = "px-4 py-2 rounded-lg  bg-[#153448] text-white">  Theme</Link>
      
     </div>
   );
