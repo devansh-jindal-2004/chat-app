@@ -5,8 +5,8 @@ import Login from "./pages/login/Login"
 import SignUp from "./pages/signup/SignUp"
 import {Toaster} from "react-hot-toast"
 import { useAuthContext } from "./context/AuthContext"
+import ProfileSetting from "./components/ProfileSetting/ProfileSetting"
 import ThemeSetting from "./components/Setting/ThemeSetting/ThemeSetting"
-// import ProfileSetting from "./components/ProfileSetting/ProfileSetting"
 // import Layout from "./components/Layout/Layout"
 
 function App() {
@@ -18,8 +18,7 @@ function App() {
         <Route path="/" element={!authUser?<Navigate to="/login" />:<Home />} />
         <Route path="/login" element={authUser?<Navigate to="/" />:<Login />}/>
         <Route path="/signup" element={authUser?<Navigate to="/" />:<SignUp />} />
-        <Route path="/theme" element={authUser?< ThemeSetting/>:<SignUp />} />
-       
+        <Route path="/theme" element={authUser? <ThemeSetting/> :<SignUp />} />
         </Routes>
         <Toaster />
       </div>
