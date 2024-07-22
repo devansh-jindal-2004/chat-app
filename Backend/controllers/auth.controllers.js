@@ -110,16 +110,23 @@ export const update = async (req, res) => {
     }
 };
 
+import { v2 as cloudinary } from "cloudinary";
+import User from "../models/User.js";
+
 export const updatePic = async (req, res) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId);
+        console.log("User ID:", userId);
 
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        if (user.profilePic.public_id) {
+        console.log("Existing profilePic:", user.profilePic);
+        console.log("Uploaded file:", req.file);
+
+        if (user.profilePic && user.profilePic.public_id) {
             await cloudinary.uploader.destroy(user.profilePic.public_id);
         }
 
@@ -130,6 +137,7 @@ export const updatePic = async (req, res) => {
 
         await user.save();
 
+        console.log("Updated user:", user);
         res.status(200).json(user);
     } catch (error) {
         console.error("Error updating profile picture:", error);
