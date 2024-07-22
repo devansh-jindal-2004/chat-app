@@ -1,38 +1,42 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 
-const useEditProfilePic = () =>{
+const useEditProfilePic = () => {
+  const [loading, setLoading] = useState(false);
+  const { setAuthUser,authUser } = useAuthContext();
 
-    const [loading , setLoading] = useState(false)
-    const {setAuthUser} = useAuthContext()
+  console.log(authUser);
 
-    const editProfilePic = async ({image})=>{
-        setLoading(true)
+  const editProfilePic = async (image) => {
+    setLoading(true);
 
-        try {
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
 
-            const res = await fetch(`http://localhost:8000/api/auth/update/profilePic`, {
-                method: "POST",
-                credentials: "include", // Include cookies in request
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({image}),
-              });
+      const res = await fetch("http://localhost:8000/api/auth/update/profilePic", {
+        method: "POST",
+        credentials: "include", // Include cookies in request
+        body: formData,
+      });
 
-              const newImage = res.json();
-              console.log("new image data-->",newImage);
-            //   setAuthUser(newImage)
-
-            
-        } catch (error) {
-            console.log(error);
-        }finally{
-            setLoading(false)
-        }
+      if (res.ok) {
+        const newData = await res.json();
+        console.log(newData);
+     
+        setAuthUser(newData);
+      } else {
+        const errorText = await res.text();
+        console.error("Failed to upload image:", errorText);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return {editProfilePic ,loading}
-}
+  return { editProfilePic, loading };
+};
 
 export default useEditProfilePic;
