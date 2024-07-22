@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useThemeContext } from '../../../context/ThemeContext';
 
 function ThemeSetting() {

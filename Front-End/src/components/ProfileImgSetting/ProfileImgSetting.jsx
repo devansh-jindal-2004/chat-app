@@ -1,20 +1,19 @@
 import React from 'react'
 import { useState } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
+import useEditProfilePic from '../../hooks/useEditProfilPic';
+
 
 function ProfileImgSetting() {
   const { authUser } = useAuthContext();
-  const [profilePic, setProfilePic] = useState(authUser.profilePic);
+  const {editProfilePic} = useEditProfilePic();
+  
 
-  const handleProfilePicChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePic(reader.result);
-        // You might want to handle the profile pic upload logic here
-      };
-      reader.readAsDataURL(file);
+  const handleProfilePicChange = async (e) => {
+    const image = e.target.files[0];
+    console.log("image-->",image);
+    if (image) {
+      await editProfilePic({image})
     }
   };
   return (
@@ -28,7 +27,7 @@ function ProfileImgSetting() {
           accept="image/*"
         />
         <img
-          src={profilePic}
+          src={authUser.profilePic}
           alt={authUser.fullName}
           className="w-full rounded-full"
         />
