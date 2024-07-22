@@ -21,10 +21,8 @@ const userSchema = new mongoose.Schema({
         enum: ["male", "female"]
     },
     profilePic: {
-        url: {
-            type:String,
-        },
-        public_id: String
+        url: { type: String },
+        public_id: { type: String }
     },
     theme: {
         type: String,
