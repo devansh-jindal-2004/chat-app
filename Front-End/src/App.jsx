@@ -5,7 +5,6 @@ import Login from "./pages/login/Login"
 import SignUp from "./pages/signup/SignUp"
 import {Toaster} from "react-hot-toast"
 import { useAuthContext } from "./context/AuthContext"
-import ProfileSetting from "./components/ProfileSetting/ProfileSetting"
 import ThemeSetting from "./components/Setting/ThemeSetting/ThemeSetting"
 // import Layout from "./components/Layout/Layout"
 
