@@ -21,11 +21,14 @@ const userSchema = new mongoose.Schema({
         enum: ["male", "female"]
     },
     profilePic: {
-        url: String,
+        url: {
+            type:String,
+        },
         public_id: String
     },
-    userTheme: {
-        type: String
+    theme: {
+        type: String,
+        default: null
     }
 }, { timestamps: true });
 
