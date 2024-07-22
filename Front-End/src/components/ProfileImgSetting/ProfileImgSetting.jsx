@@ -1,21 +1,24 @@
-import React from 'react'
-import { useState } from 'react';
+import React from 'react';
 import { useAuthContext } from '../../context/AuthContext';
-import useEditProfilePic from '../../hooks/useEditProfilPic';
-
+// import useEditProfilePic from '../../hooks/useEditProfilePic';
+import useEditProfilePic from "../../hooks/useEditProfilPic.js"
 
 function ProfileImgSetting() {
   const { authUser } = useAuthContext();
-  const {editProfilePic} = useEditProfilePic();
-  
+  const { editProfilePic, loading } = useEditProfilePic();
 
   const handleProfilePicChange = async (e) => {
     const image = e.target.files[0];
-    console.log("image-->",image);
+    console.log("Selected image -->", image);
     if (image) {
-      await editProfilePic({image})
+      try {
+        await editProfilePic(image); // Pass image directly, not as an object
+      } catch (error) {
+        console.error("Error updating profile picture:", error);
+      }
     }
   };
+
   return (
     <>
       <div className="relative w-[30%] mx-auto">
@@ -27,9 +30,9 @@ function ProfileImgSetting() {
           accept="image/*"
         />
         <img
-          src={authUser.profilePic}
+          src={authUser.profilePic.url}
           alt={authUser.fullName}
-          className="w-full rounded-full"
+          className="w-full rounded-full "
         />
         <label
           htmlFor="img"
@@ -41,8 +44,9 @@ function ProfileImgSetting() {
       <h2 className="text-2xl font-semibold mb-4 text-center">
         {authUser.fullName}
       </h2>
+      {loading && <p className="text-center">Uploading...</p>}
     </>
-  )
+  );
 }
 
-export default ProfileImgSetting
+export default ProfileImgSetting;
