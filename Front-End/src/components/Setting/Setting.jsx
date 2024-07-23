@@ -15,7 +15,7 @@ function Setting() {
   const handleEditToggle = async () => {
     if(editable){
       setEditable(false);
-       await editAuth({userName,fullName})
+      await editAuth({userName,fullName})
     } else {
       setEditable(true)
     }
@@ -23,9 +23,11 @@ function Setting() {
   };
 
   return (
+    <>
+   
     <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm absolute top-12 right-0 z-50">
-      <ProfileImgSetting />
-     
+    <ProfileImgSetting />
+
        <button
         className="rounded-xl px-4 py-2 border  text-[#153448]  relative left-60"
         onClick={handleEditToggle}
@@ -54,7 +56,9 @@ function Setting() {
       <Link to = "/theme" className = "px-4 py-2 rounded-lg  bg-[#153448] text-white">  Theme</Link>
      
     </div>
+     </>
   );
+ 
 }
 
 export default Setting;

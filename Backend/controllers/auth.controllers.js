@@ -110,8 +110,7 @@ export const update = async (req, res) => {
     }
 };
 
-import { v2 as cloudinary } from "cloudinary";
-import User from "../models/User.js";
+
 
 export const updatePic = async (req, res) => {
     try {
@@ -149,30 +148,31 @@ export const theme = async (req, res) => {
     try {
         const userId = req.user.id;
         const { theme } = req.body;
-
+        let user;
         if(!theme){
-            const user = await User.findByIdAndUpdate(
+            user = await User.findByIdAndUpdate(
                 userId,
                 { theme: null },
                 { new: true, select: '-password' }
             );
+        } else {
+            if (typeof theme !== "string") {
+                return res.status(400).json({ message: "Invalid theme" });
+            }
+            
+            user = await User.findByIdAndUpdate(
+                userId,
+                { theme },
+                { new: true, select: '-password' }
+            );
         }
-
-        if (typeof theme !== 'string') {
-            return res.status(400).json({ message: "Invalid theme" });
-        }
-
-        const user = await User.findByIdAndUpdate(
-            userId,
-            { theme },
-            { new: true, select: '-password' }
-        );
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
         res.status(200).json(user);
+        
     } catch (error) {
         console.error("Error updating theme:", error);
         res.status(500).json({ message: "Internal server error" });

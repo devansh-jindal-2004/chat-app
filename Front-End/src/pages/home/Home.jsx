@@ -12,7 +12,7 @@ export default function Home() {
     return (
         <>
                 {/* it will render on lablet and laptop screen */}
-            <div className=' hidden md:flex h-screen  w-full rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
+            <div className=' md:px-4  hidden md:flex h-screen  w-full rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
                 <Sidebar />
                 <MessageContainer />
             </div>

@@ -19,14 +19,14 @@ const Message = ({ message }) => {
     <div className={`chat ${fromMe?"chat-end":"chat-start"}`}>
       <div className='chat-image avatar'>
         <div className='w-10 rounded-full'>
-          <img src={fromMe?authUser.profilePic:selectedConversation.profilePic} alt="Avatar" />
+          <img src={fromMe?authUser.profilePic.url:selectedConversation.profilePic} alt="Avatar" />
         </div>
       </div>
-      <div className='chat-header text-[#153448]'>
-        <span>{fromMe? authUser.fullName:selectedConversation.fullName}</span>&nbsp;
-        <time className="text-xs opacity-100">{formattedTime}</time>
+      <div className='chat-header  text-white'>
+        <span >{fromMe? authUser.fullName:selectedConversation.fullName}</span>&nbsp;
+        <time className="text-xs opacity-100 text-white">{formattedTime}</time>
       </div>
-      <div className={`chat-bubble text-white ${fromMe?"bg-[#399cdd]":""} ${shakeClass}`}>{msg}</div>
+      <div className={`chat-bubble text-[#153448] ${fromMe?" bg-white":""} ${shakeClass}`}>{msg}</div>
     </div>
   );
 };

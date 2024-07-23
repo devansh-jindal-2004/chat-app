@@ -11,7 +11,7 @@ export default function SignUp() {
 
     const handleGenderChange = (value) => {
         setSelectedGender(value);
-        setValue('gender', value); // Set the value in react-hook-form
+        setValue('gender', value); 
     };
 
     const handleSubmit2 = async (data) => {

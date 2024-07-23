@@ -10,7 +10,6 @@ export default function Login() {
     const { loading, login } = useLogin();
 
     const handleForm = async (data) => {
-        console.log(data);
         await login(data);
     };
 

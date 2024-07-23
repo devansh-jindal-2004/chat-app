@@ -3,8 +3,18 @@ import Message from './Message';
 import useGetMessage from '../../hooks/useGetMessage.js';
 import MessageSkelton from '../skelton/MessageSkelton.jsx';
 import useListenMessages from '../../hooks/useListenMessages.js';
+import { useAuthContext } from '../../context/AuthContext';
+import { useThemeContext } from '../../context/ThemeContext';
 
 function Messages() {
+  const {authUser} = useAuthContext();
+   const {Themes} = useThemeContext();
+
+   const bgTheme = authUser.theme && authUser.theme;
+   
+  const themeSrc = Themes.find((theme) => theme.name === bgTheme)?.src;
+     console.log("themesrc-->",themeSrc);
+
   const { loading, messages } = useGetMessage();
   useListenMessages();
   const lastMsgRef = useRef();
@@ -14,7 +24,14 @@ function Messages() {
   },[messages])
   
   return (
-    <div className='px-4 flex-1  overflow-scroll'>
+    <div 
+    className={`px-4 flex-1  overflow-scroll ${themeSrc ? "" : " bg-[#708871]"}`}
+    style={{
+      backgroundImage : themeSrc ? `url(${themeSrc})`:`none`,
+      backgroundSize: 'cover',
+       backgroundPosition: 'center'
+    }}>
+
       {!loading && messages.length > 0 && messages.map((message) => (
       <div key={message._id} ref={lastMsgRef}>
         <Message message={message} />

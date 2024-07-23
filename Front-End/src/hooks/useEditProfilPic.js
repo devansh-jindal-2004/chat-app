@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const useEditProfilePic = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser,authUser } = useAuthContext();
 
-  console.log(authUser);
 
   const editProfilePic = async (image) => {
     setLoading(true);
@@ -22,15 +22,16 @@ const useEditProfilePic = () => {
 
       if (res.ok) {
         const newData = await res.json();
-        console.log(newData);
-     
-        setAuthUser(newData);
+        
+         localStorage.setItem("chat-user", JSON.stringify(newData))
+         setAuthUser(newData);
+       
       } else {
         const errorText = await res.text();
-        console.error("Failed to upload image:", errorText);
+         toast.error("Failed to upload image:", errorText);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     } finally {
       setLoading(false);
     }
