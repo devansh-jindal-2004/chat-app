@@ -10,6 +10,7 @@ function MessageContainer() {
    
   const { selectedConversation, setSelectedConversation } = useConversation();
   const [open, setOpen] = useState(false);
+  
   const handleOnclick = () => {
     setSelectedConversation(null)
   }
@@ -31,7 +32,7 @@ function MessageContainer() {
             </div>
             <div className=' ms-10 flex'>
               <div className='w-12 rounded-full'>
-                <img src={selectedConversation.profilePic} alt="useravatar" />
+                <img src={selectedConversation.profilePic.url} alt="useravatar" />
               </div>
 
               <span className='text-[#DFD0B8]  ps-4 pt-2 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>

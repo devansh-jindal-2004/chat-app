@@ -25,11 +25,11 @@ function Setting() {
   return (
     <>
    
-    <div className="bg-white shadow-lg rounded-lg p-6 max-w-sm absolute top-12 right-0 z-50">
+    <div className="bg-white shadow-lg rounded-lg p-6  max-w-[90%] md:max-w-sm  absolute top-12 right-0 z-50">
     <ProfileImgSetting />
 
        <button
-        className="rounded-xl px-4 py-2 border  text-[#153448]  relative left-60"
+        className="rounded-xl px-4 py-2 border  text-[#153448]  relative  left-52  md:left-60"
         onClick={handleEditToggle}
       >
         {editable ?'✔ Save': (<i className="fa-solid fa-pen"></i>) }
@@ -53,7 +53,9 @@ function Setting() {
       onChange={(e) => setFullName(e.target.value)} 
       />
 
-      <Link to = "/theme" className = "px-4 py-2 rounded-lg  bg-[#153448] text-white">  Theme</Link>
+     <div className='mt-5 '>
+       <Link to = "/theme" className = "px-4 py-2  rounded-lg  bg-[#153448] text-white">  Theme</Link>
+     </div>
      
     </div>
      </>

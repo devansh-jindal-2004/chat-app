@@ -19,7 +19,7 @@ const Message = ({ message }) => {
     <div className={`chat ${fromMe?"chat-end":"chat-start"}`}>
       <div className='chat-image avatar'>
         <div className='w-10 rounded-full'>
-          <img src={fromMe?authUser.profilePic.url:selectedConversation.profilePic} alt="Avatar" />
+          <img src={fromMe?authUser.profilePic.url:selectedConversation.profilePic.url} alt="Avatar" />
         </div>
       </div>
       <div className='chat-header  text-white'>

@@ -13,7 +13,7 @@ function Messages() {
    const bgTheme = authUser.theme && authUser.theme;
    
   const themeSrc = Themes.find((theme) => theme.name === bgTheme)?.src;
-     console.log("themesrc-->",themeSrc);
+     
 
   const { loading, messages } = useGetMessage();
   useListenMessages();
