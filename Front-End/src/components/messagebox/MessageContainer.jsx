@@ -30,9 +30,9 @@ function MessageContainer() {
             <div >
               <button onClick={handleOnclick} className=' md:hidden text-2xl text-[#DFD0B8]'><i className="fa-solid fa-arrow-left-long"></i></button>
             </div>
-            <div className=' ms-10 flex'>
+            <div className=' ms-4 md:ms-10 flex'>
               <div className='w-12 rounded-full'>
-                <img src={selectedConversation.profilePic.url} alt="useravatar" />
+                <img src={selectedConversation.profilePic.url} alt="useravatar" className=' rounded-full' />
               </div>
 
               <span className='text-[#DFD0B8]  ps-4 pt-2 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>

@@ -39,8 +39,8 @@ function Messages() {
       ))}
       {loading && (<><MessageSkelton /> <MessageSkelton /><MessageSkelton /> <MessageSkelton /><MessageSkelton /></>)}
       {!loading && messages.length == 0 && (
-        <p className='mt-[15%] text-center text-[#153448] pt-6'>
-          <span className=' text-2xl text-[#153448]'>Welcome 👋</span>Send a message to this conversatio
+        <p className='mt-[15%] text-center text-[#ffffff] pt-6'>
+          <span className=' text-2xl text-[#ffffff]'>Welcome 👋</span>Send a message to this conversatio
         </p>)}
     </div>
   );
