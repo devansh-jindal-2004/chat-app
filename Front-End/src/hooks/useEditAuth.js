@@ -10,9 +10,8 @@ const useEditAuth = () =>{
     const editAuth =  async ({userName, fullName})=>{
             setLoading(true)
         try {
-            const res = await fetch(`http://localhost:8000/api/auth/update`, {
+            const res = await fetch(`/api/auth/update`, {
                 method: "POST",
-                credentials: "include", // Include cookies in request
                 headers: {
                   "Content-Type": "application/json",
                 },

@@ -9,10 +9,9 @@ const {setAuthUser} = useAuthContext();
   const editTheme = async (theme)=>{
     setloading(true)
     try {
-        const res = await fetch("http://localhost:8000/api/auth/update/theme", {
+        const res = await fetch("/api/auth/update/theme", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            credentials: 'include',
             body: JSON.stringify({theme})
         });
 

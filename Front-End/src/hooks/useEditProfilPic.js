@@ -14,9 +14,8 @@ const useEditProfilePic = () => {
       const formData = new FormData();
       formData.append("image", image);
 
-      const res = await fetch("http://localhost:8000/api/auth/update/profilePic", {
+      const res = await fetch("/api/auth/update/profilePic", {
         method: "POST",
-        credentials: "include", // Include cookies in request
         body: formData,
       });
 

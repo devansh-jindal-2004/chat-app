@@ -15,10 +15,9 @@ const useGetMessage = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:8000/api/message/${selectedConversation._id}`,
+          `/api/message/${selectedConversation._id}`,
           {
             method: "GET",
-            credentials: "include", // Include cookies in request
             headers: {
               "Content-Type": "application/json",
             },
