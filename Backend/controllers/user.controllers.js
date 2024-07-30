@@ -14,7 +14,7 @@ export const getUsersForSidebar = async (req, res) => {
             path: 'participants',
             model: 'User',
             select: '-password'
-        });
+        }).sort({ updatedAt: -1 });
 
         let contacts = new Set();
 
