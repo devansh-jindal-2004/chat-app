@@ -4,7 +4,6 @@ import MessageInput from './MessageInput';
 import NoChatSelected from './NoChatSelected';
 import useConversation from '../../store/useConversation';
 import Setting from '../Setting/Setting';
-import { useSocketContext } from '../../context/SocketContext';
 
 
 function MessageContainer() {
@@ -20,8 +19,6 @@ function MessageContainer() {
     setOpen((prev) => !prev)
   }
 
-  const { onlineUsers } = useSocketContext();
-  const isOnline = onlineUsers.includes(selectedConversation._id)
 
   return (
     <div className='w-full h-screen md:w-2/3 flex flex-col bg-[#DFD0B8] overflow-hidden relative  '>
@@ -40,7 +37,6 @@ function MessageContainer() {
               </div>
 
               <span className='text-[#DFD0B8]  ps-4 pt-2 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>
-              <span>{isOnline?"online":""}</span>
             </div>
 
 
