@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import ProfileImgSetting from '../ProfileImgSetting/ProfileImgSetting';
 import Input from '../Input';
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import useEditAuth from '../../hooks/useEditAuth';
 
 function Setting() {
@@ -10,57 +10,57 @@ function Setting() {
   const [editable, setEditable] = useState(false);
   const [userName, setUserName] = useState(authUser.userName);
   const [fullName, setFullName] = useState(authUser.fullName);
-  const {editAuth, loading} =  useEditAuth();
+  const { editAuth, loading } = useEditAuth();
 
   const handleEditToggle = async () => {
-    if(editable){
+    if (editable) {
       setEditable(false);
-      await editAuth({userName,fullName})
+      await editAuth({ userName, fullName })
     } else {
       setEditable(true)
     }
-    
+
   };
 
   return (
     <>
-   
-    <div className="bg-white shadow-lg rounded-lg p-6  max-w-[90%] md:max-w-sm  absolute top-12 right-0 z-50">
-    <ProfileImgSetting />
 
-       <button
-        className="rounded-xl px-4 py-2 border  text-[#153448]  relative  left-52  md:left-60"
-        onClick={handleEditToggle}
-      >
-        {editable ?'✔ Save': (<i className="fa-solid fa-pen"></i>) }
-      </button>
-      <Input 
-      label = "Username" 
-      type = "text"  
-      className="outline-none border" 
-      value = {userName}
-      readOnly={!editable}
-      onChange={(e) => setUserName(e.target.value)} 
-      />
-      
+      <div className="bg-white shadow-lg rounded-lg p-6  max-w-[90%] md:max-w-sm  absolute top-12 right-0 z-50">
+        <ProfileImgSetting />
 
-      <Input 
-      label = "FullName" 
-      type = "text"  
-      className="outline-none border" 
-      value = {fullName}
-      readOnly={!editable}
-      onChange={(e) => setFullName(e.target.value)} 
-      />
+        <button
+          className="rounded-xl px-4 py-2 border  text-[#153448]  relative  left-52  md:left-60"
+          onClick={handleEditToggle}
+        >
+          {editable ? '✔ Save' : (<i className="fa-solid fa-pen"></i>)}
+        </button>
+        <Input
+          label="Username"
+          type="text"
+          className="outline-none border"
+          value={userName}
+          readOnly={!editable}
+          onChange={(e) => setUserName(e.target.value)}
+        />
 
-     <div className='mt-5 '>
-       <Link to = "/theme" className = "px-4 py-2  rounded-lg  bg-[#153448] text-white">  Theme</Link>
-     </div>
-     
-    </div>
-     </>
+
+        <Input
+          label="FullName"
+          type="text"
+          className="outline-none border"
+          value={fullName}
+          readOnly={!editable}
+          onChange={(e) => setFullName(e.target.value)}
+        />
+
+        <div className='mt-5 '>
+          <Link to="/theme" className="px-4 py-2  rounded-lg  bg-[#153448] text-white">  Theme</Link>
+        </div>
+
+      </div>
+    </>
   );
- 
+
 }
 
 export default Setting;

@@ -26,7 +26,7 @@ const Message = ({ message }) => {
         <span >{fromMe? authUser.fullName:selectedConversation.fullName}</span>&nbsp;
         <time className="text-xs opacity-100 text-white">{formattedTime}</time>
       </div>
-      <div className={`chat-bubble ${fromMe?"text-[#153448]":"text-white"} ${fromMe?" bg-white":"bg-gray-300"} ${shakeClass}`}>{msg}</div>
+      <div className={`chat-bubble ${fromMe?" bg-white text-[#153448]":"bg-gray-500 text-white"} ${shakeClass}`}>{msg}</div>
     </div>
   );
 };

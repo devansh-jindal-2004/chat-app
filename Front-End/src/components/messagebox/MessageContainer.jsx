@@ -4,21 +4,27 @@ import MessageInput from './MessageInput';
 import NoChatSelected from './NoChatSelected';
 import useConversation from '../../store/useConversation';
 import Setting from '../Setting/Setting';
+import { useSocketContext } from '../../context/SocketContext';
 
 
 function MessageContainer() {
 
   const { selectedConversation, setSelectedConversation } = useConversation();
   const [open, setOpen] = useState(false);
-
+  const {onlineUsers} = useSocketContext();
+  const isOnline = selectedConversation && onlineUsers.includes(selectedConversation._id);
+  
   const handleOnclick = () => {
     setSelectedConversation(null)
   }
 
   const handleMenuBtn = () => {
+    console.log(isOnline);
     setOpen((prev) => !prev)
   }
 
+
+    
 
   return (
     <div className='w-full h-screen md:w-2/3 flex flex-col bg-[#DFD0B8] overflow-hidden relative  '>
@@ -33,10 +39,12 @@ function MessageContainer() {
             </div>
             <div className=' ms-4 md:ms-10 flex'>
               <div className='w-12 rounded-full'>
-                <img src={selectedConversation.profilePic.url} alt="useravatar" className=' rounded-full' />
+                <img src={selectedConversation.profilePic.url} alt="useravatar" className=' rounded-full h-12' />
               </div>
-
-              <span className='text-[#DFD0B8]  ps-4 pt-2 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>
+              <div className='flex flex-col'>
+              <span className='text-[#DFD0B8]  ps-4 text-xl md:text-2xl text-center font-bold'>{selectedConversation.fullName}</span>
+              <span className='text-[#DFD0B8] ps-4'>{isOnline?"Online":""}</span>
+              </div>
             </div>
 
 
